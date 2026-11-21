@@ -15,11 +15,15 @@ public class ApiClient {
 
     //private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static String sendPostRequest(String url, String requestBody) {
+    public static String sendRequest(String url, String httpMethod, String requestBody) {
 
         try {
             // Convert Java object to JSON
             //String requestBody = objectMapper.writeValueAsString(requestObject);
+
+            HttpRequest.BodyPublisher bodyPublisher = (requestBody == null)
+                    ? HttpRequest.BodyPublishers.noBody()
+                    : HttpRequest.BodyPublishers.ofString(requestBody);
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
@@ -27,9 +31,7 @@ public class ApiClient {
                     .header("Content-Type", "application/json")
                     .header("Accept", "application/json")
                     .header("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-//                    .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
-//                    .GET()
+                    .method(httpMethod, bodyPublisher)
                     .build();
 
             HttpResponse<String> response = httpClient.send(
@@ -38,6 +40,7 @@ public class ApiClient {
             );
 
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                //  objectMapper.readValue(response.body(), responseType);
                 return response.body();
             }
 
