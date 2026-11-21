@@ -1,3 +1,10 @@
+
+/*
+* Extends runtime exception which makes it unchecked exception.
+* Function using this exception might not handle, but it would
+* have been checked then function using it must handle.
+* */
+
 public class ApiException extends RuntimeException {
 
     private final int statusCode;
