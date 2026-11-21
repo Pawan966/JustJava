@@ -15,7 +15,7 @@ public class ApiClient {
 
     //private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static String sendRequest(String url, String httpMethod, String requestBody) {
+    public static String sendRequest(String url, String httpMethod, String requestBody){
 
         try {
             // Convert Java object to JSON
@@ -57,8 +57,8 @@ public class ApiClient {
             Thread.currentThread().interrupt();
             throw new ApiException("API request was interrupted", e);
 
-        } catch (IOException e) {
-            throw new ApiException("Failed to serialize request or communicate with API", e);
+        } catch (Exception e) {
+            throw new ApiException("Generic exception caught", e);
         }
     }
 }
