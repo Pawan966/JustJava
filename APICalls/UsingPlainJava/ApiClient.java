@@ -44,7 +44,11 @@ public class ApiClient {
                 return response.body();
             }
 
-            throw new ApiException("Error making api call");
+            throw new ApiException(
+                    response.statusCode(),
+                    response.body(),
+                    "API call failed with status " + response.statusCode()
+            );
 
         } catch (HttpTimeoutException e) {
             throw new ApiException("API request timed out", e);
